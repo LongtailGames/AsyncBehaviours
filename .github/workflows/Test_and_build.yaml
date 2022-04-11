@@ -13,23 +13,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout deploy build
-      uses: actions/checkout@v3
+        uses: actions/checkout@v3
 
-        - name: Setup dotnet
-          uses: actions/setyp-dotnet@v2
-          with:
-            dotnet-version: ${{env.DOTNET_VERSION}}
+      - name: Setup dotnet
+        uses: actions/setyp-dotnet@v2
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
 
-        - name: Restore nuget
-          run: dotnet restore
+      - name: Restore nuget
+        run: dotnet restore
 
-        - name: Build app
-          run dotnet build -c Release --no-restore
+      - name: Build app
+        run dotnet build -c Release --no-restore
 
-        - name: RunTests
-          run dotnet test -c Release --no-restore
+      - name: RunTests
+        run dotnet test -c Release --no-restore
 
-        - name: Publish
-          run: dotnet publish 0c Release -o ./deploy
-        
+      - name: Publish
+        run: dotnet publish 0c Release -o ./deploy
+      
           
