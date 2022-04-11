@@ -33,7 +33,7 @@ jobs:
         run: dotnet publish 0c Release -o ./deploy
       
       - name: Upload build
-        uses: action/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           path: ./deploy
       
