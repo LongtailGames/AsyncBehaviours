@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AsyncBehaviours;
+using com.longtailgames.asyncbehaviours;
 using NUnit.Framework;
 
 namespace AsyncBehaviourTests
@@ -31,7 +31,7 @@ namespace AsyncBehaviourTests
         {
             var aloop = new AsyncLoop(loopTime, Counter.Increment);
             aloop.Start();
-
+            Assert.IsTrue(aloop.Running);
             await Task.Delay(loopTime);
             Assert.Greater(Counter.Count, 0);
             await aloop.Stop();
@@ -59,7 +59,7 @@ namespace AsyncBehaviourTests
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken tkn = source.Token;
             source.CancelAfter(TimeSpan.FromMilliseconds(50));
-            Assert.ThrowsAsync<TaskCanceledException>(async () => { await aloop.Start(tkn); });
+            Assert.ThrowsAsync<OperationCanceledException>(async () => { await aloop.Start(tkn); });
         }
 
         [Test]

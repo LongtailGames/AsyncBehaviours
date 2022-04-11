@@ -1,9 +1,8 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace AsyncBehaviours
+namespace com.longtailgames.asyncbehaviours
 {
+    /// <summary>
+    /// A cooldown based behaviour. Useful for events that need recharging.
+    /// </summary>
     public class AsyncCooldown
     {
         public bool IsCooldown { get; private set; }
@@ -25,8 +24,10 @@ namespace AsyncBehaviours
         }
 
         /// <summary>
-        /// Awaiting this will await the cooldown.
-        /// Sometimes it is better not to await.
+        /// If not in cooldown will fire the action and start cooldown.
+        ///
+        /// If in cooldown fire cancelled action.
+        /// 
         /// </summary>
         public async Task Fire(CancellationToken token=default)
         {

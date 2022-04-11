@@ -1,14 +1,13 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace AsyncBehaviours
+namespace com.longtailgames.asyncbehaviours
 {
-    public class AsyncLoop:IDisposable
+    /// <summary>
+    /// Execute an action every interval.
+    /// </summary>
+    public class AsyncLoop : IDisposable
     {
-        private TimeSpan every;
-        private Action action;
-        public bool running { get; private set; }
+        private readonly TimeSpan every;
+        private readonly Action action;
+        public bool Running { get; private set; }
         Task loop;
 
         public AsyncLoop(TimeSpan every, Action action)
@@ -17,16 +16,20 @@ namespace AsyncBehaviours
             this.action = action;
         }
 
-        public async Task Start(CancellationToken token = default)
+        /// <summary>
+        /// Start the loop.
+        /// </summary>
+        /// <param name="cancellationToken">An optional cancellation cancellationToken</param>
+        public async Task Start(CancellationToken cancellationToken = default)
         {
-            running = true;
-            loop = Loop(token);
+            Running = true;
+            loop = Loop(cancellationToken);
             await loop;
         }
 
         private async Task Loop(CancellationToken cancellationToken)
         {
-            while (running)
+            while (Running)
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 action?.Invoke();
@@ -34,12 +37,20 @@ namespace AsyncBehaviours
             }
         }
 
+        /// <summary>
+        /// Stops the looping behaviour.
+        /// Equivalent to <seealso cref="Dispose"/>
+        /// </summary>
         public async Task Stop()
         {
-            running = false;
+            Running = false;
             await loop;
         }
 
+        /// <summary>
+        /// Stops the looping behaviour.
+        /// Equivalent to <seealso cref="Stop"/>
+        /// </summary>
         public void Dispose()
         {
             this?.Stop();

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using AsyncBehaviours;
+using com.longtailgames.asyncbehaviours;
 using NUnit.Framework;
 
 namespace AsyncBehaviourTests

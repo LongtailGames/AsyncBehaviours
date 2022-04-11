@@ -1,8 +1,4 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace AsyncBehaviours
+namespace com.longtailgames.asyncbehaviours
 {
     public class AsyncDelayedQueue : IAsyncDelayed
     {

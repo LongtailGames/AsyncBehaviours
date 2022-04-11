@@ -1,7 +1,4 @@
-using System.Threading;
-using System.Threading.Tasks;
-
-namespace AsyncBehaviours
+namespace com.longtailgames.asyncbehaviours
 {
     public interface IAsyncDelayed
     {

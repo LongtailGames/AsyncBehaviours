@@ -1,7 +1,7 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using AsyncBehaviours;
+using com.longtailgames.asyncbehaviours;
 using NUnit.Framework;
 
 namespace AsyncBehaviourTests
@@ -79,7 +79,7 @@ namespace AsyncBehaviourTests
             CancellationTokenSource source = new CancellationTokenSource();
             CancellationToken token = source.Token;
             source.CancelAfter(T.MediumTime);
-            Assert.ThrowsAsync<TaskCanceledException>(async () => { await adelay.Fire(token); });
+            Assert.ThrowsAsync<OperationCanceledException>(async () => { await adelay.Fire(token); });
         }
     }
 }
