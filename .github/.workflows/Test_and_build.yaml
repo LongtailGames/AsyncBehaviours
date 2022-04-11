@@ -4,7 +4,7 @@ name: TestnBuild
 on: 
   push: 
     branches: 
-      master
+      - master
       
 env:
   DOTNET_VERSION: '6.x.x'
