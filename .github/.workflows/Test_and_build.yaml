@@ -1,5 +1,5 @@
 
-name: Test and Build
+name: TestnBuild
 
 on: 
   push: 
