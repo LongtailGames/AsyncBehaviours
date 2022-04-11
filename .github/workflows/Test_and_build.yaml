@@ -29,12 +29,12 @@ jobs:
       - name: RunTests
         run: dotnet test -c Release --no-restore
 
-      - name: Publish
-        run: dotnet publish 0c Release -o ./deploy
+#      - name: Publish
+#        run: dotnet publish 0c Release -o ./deploy
       
       - name: Upload build
         uses: actions/upload-artifact@v3
         with:
-          path: ./deploy
+          path: ./AsyncBehaviours/bin/Release/netstandard2.1/AsyncBehaviours.dll
       
           
