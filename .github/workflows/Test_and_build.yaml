@@ -24,10 +24,10 @@ jobs:
         run: dotnet restore
 
       - name: Build app
-        run dotnet build -c Release --no-restore
+        run: dotnet build -c Release --no-restore
 
       - name: RunTests
-        run dotnet test -c Release --no-restore
+        run: dotnet test -c Release --no-restore
 
       - name: Publish
         run: dotnet publish 0c Release -o ./deploy
