@@ -23,7 +23,7 @@ namespace AsyncBehaviours
             this.action = action;
         }
 
-        public async Task Fire(CancellationToken cancellationToken)
+        public async Task Fire(CancellationToken cancellationToken=default)
         {
             isWaiting = true;
             await Task.Delay(delay);

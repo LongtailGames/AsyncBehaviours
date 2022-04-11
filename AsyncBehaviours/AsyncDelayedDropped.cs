@@ -21,7 +21,7 @@ namespace AsyncBehaviours
         private TimeSpan delay;
         private Action action;
 
-        public async Task Fire(CancellationToken cancellationToken)
+        public async Task Fire(CancellationToken cancellationToken=default)
         {
             if (isWaiting)
             {
