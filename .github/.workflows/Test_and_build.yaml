@@ -4,7 +4,7 @@ name: TestnBuild
 on: 
   push: 
     branches: 
-      -master
+      master
       
 env:
   DOTNET_VERSION: '6.x.x'
@@ -20,5 +20,8 @@ jobs:
           uses: actions/setyp-dotnet@v2
           with:
             dotnet-version: ${{env.DOTNET_VERSION}}
+            
+        - name: Restore nuget
+          run: dotnet restore
           
           
