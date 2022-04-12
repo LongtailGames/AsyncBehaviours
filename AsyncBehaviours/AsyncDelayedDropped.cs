@@ -16,6 +16,7 @@
 
         private TimeSpan delay;
         private Action action;
+        private Task currentWait;
 
         public async Task Fire(CancellationToken cancellationToken=default)
         {
@@ -25,10 +26,16 @@
             }
 
             isWaiting = true;
-            await Task.Delay(delay);
+            currentWait =  Task.Delay(delay);
+            await currentWait;
             action.Invoke();
             isWaiting = false;
             cancellationToken.ThrowIfCancellationRequested();
+        }
+
+        public async Task Stop()
+        {
+            await (currentWait??Task.CompletedTask);
         }
     }
 }

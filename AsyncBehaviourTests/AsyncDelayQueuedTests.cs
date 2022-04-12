@@ -19,7 +19,7 @@ namespace AsyncBehaviourTests
         public async Task Multiple_events_allFire()
         {
             List<Task> tasks = new List<Task>();
-            var delay =  CreateInstance(TimeSpan.FromMilliseconds(10), Fire);
+            var delay =  CreateInstance(T.ShortTime, Fire);
             for (int i = 0; i < 1000; i++)
             {
                 tasks.Add(delay.Fire());
@@ -27,6 +27,18 @@ namespace AsyncBehaviourTests
             Assert.Less(Counter.Count,1000);
             await Task.WhenAll(tasks);
             Assert.AreEqual(1000, Counter.Count);
+        }
+          [Test]
+        public async Task Stop_completes_all()
+        {
+            var adelay = CreateInstance(T.ShortTime, Counter.Increment);
+            for (int i = 0; i < 100; i++)
+            {
+                await adelay.Fire();
+            }
+            await adelay.Stop();
+            Assert.AreEqual(100,Counter.Count);
+            Assert.False(adelay.isWaiting);
         }
     }
 }

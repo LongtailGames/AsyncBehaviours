@@ -3,12 +3,13 @@ namespace com.longtailgames.asyncbehaviours
     /// <summary>
     /// A cooldown based behaviour. Useful for events that need recharging.
     /// </summary>
-    public class AsyncCooldown
+    public class AsyncCooldown : IAsyncStop, IAsyncFire
     {
         public bool IsCooldown { get; private set; }
         private readonly TimeSpan cooldown;
         private readonly Action action;
         private readonly Action cancelled;
+        private Task currentJob;
 
         public AsyncCooldown(TimeSpan cooldown, Action action)
         {
@@ -29,7 +30,7 @@ namespace com.longtailgames.asyncbehaviours
         /// If in cooldown fire cancelled action.
         /// 
         /// </summary>
-        public async Task Fire(CancellationToken token=default)
+        public async Task Fire(CancellationToken token = default)
         {
             if (IsCooldown)
             {
@@ -39,14 +40,15 @@ namespace com.longtailgames.asyncbehaviours
 
             IsCooldown = true;
             action.Invoke();
-            await Task.Delay(cooldown);
+            currentJob = Task.Delay(cooldown);
+            await currentJob;
             IsCooldown = false;
             token.ThrowIfCancellationRequested();
         }
 
-        // public void Fire()
-        // {
-        //     Fire();
-        // }
+        public async Task Stop()
+        {
+            await (currentJob ?? Task.CompletedTask);
+        }
     }
 }

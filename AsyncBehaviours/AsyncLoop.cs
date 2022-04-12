@@ -3,7 +3,7 @@ namespace com.longtailgames.asyncbehaviours
     /// <summary>
     /// Execute an action every interval.
     /// </summary>
-    public class AsyncLoop : IDisposable
+    public class AsyncLoop : IDisposable, IAsyncStop
     {
         private readonly TimeSpan every;
         private readonly Action action;
@@ -44,7 +44,7 @@ namespace com.longtailgames.asyncbehaviours
         public async Task Stop()
         {
             Running = false;
-            await loop;
+            await (loop??Task.CompletedTask);
         }
 
         /// <summary>

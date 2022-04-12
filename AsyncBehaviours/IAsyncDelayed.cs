@@ -1,8 +1,7 @@
 namespace com.longtailgames.asyncbehaviours
 {
-    public interface IAsyncDelayed
+    public interface IAsyncDelayed : IAsyncStop, IAsyncFire
     {
         bool isWaiting { get; }
-        Task Fire(CancellationToken cancellationToken=default);
     }
 }

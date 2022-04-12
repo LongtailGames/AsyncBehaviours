@@ -12,6 +12,7 @@ namespace com.longtailgames.asyncbehaviours
         public SemaphoreSlim oneAtATime = new SemaphoreSlim(1);
         private TimeSpan delay;
         private Action action;
+        private Task lastRequest;
 
         public AsyncDelayedQueue(TimeSpan delay, Action action)
         {
@@ -23,6 +24,12 @@ namespace com.longtailgames.asyncbehaviours
         {
             isWaiting = true;
             await Task.Delay(delay);
+            lastRequest =  ActuallyFire(cancellationToken);
+            await lastRequest;
+        }
+
+        private async Task ActuallyFire(CancellationToken cancellationToken)
+        {
             await oneAtATime.WaitAsync();
             try
             {
@@ -34,6 +41,11 @@ namespace com.longtailgames.asyncbehaviours
                 isWaiting = false;
                 cancellationToken.ThrowIfCancellationRequested();
             }
+        }
+
+        public async Task Stop()
+        {
+            await (lastRequest ?? Task.CompletedTask);
         }
     }
 }

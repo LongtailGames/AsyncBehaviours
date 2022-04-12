@@ -71,8 +71,8 @@ namespace AsyncBehaviourTests
             await t;
             Assert.False(delay.isWaiting);
         }
-        
-           [Test]
+
+        [Test]
         public async Task CancelTask()
         {
             var adelay = CreateInstance(T.LongTime, Counter.Increment);
@@ -81,5 +81,24 @@ namespace AsyncBehaviourTests
             source.CancelAfter(T.MediumTime);
             Assert.ThrowsAsync<OperationCanceledException>(async () => { await adelay.Fire(token); });
         }
+
+        [Test]
+        public async Task Stop_WithoutStarting_noError()
+        {
+            var adelay = CreateInstance(T.ShortTime, Counter.Increment);
+            await adelay.Stop();
+            Assert.False(adelay.isWaiting);
+        }
+
+        [Test]
+        public async Task Stop_Awaits_completion()
+        {
+            var adelay = CreateInstance(T.ShortTime, Counter.Increment);
+            await adelay.Fire();
+            await adelay.Stop();
+            Assert.False(adelay.isWaiting);
+        }
+
+      
     }
 }

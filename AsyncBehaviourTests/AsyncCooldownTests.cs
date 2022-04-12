@@ -103,5 +103,23 @@ namespace AsyncBehaviourTests
             source.CancelAfter(T.MediumTime);
             Assert.ThrowsAsync<OperationCanceledException>(async () => { await acool.Fire(token); });
         }
+
+        [Test]
+        public async Task Stop_Ends_an_event()
+        {
+            var acool = new AsyncCooldown(T.LongTime, Counter.Increment, DropCounter.Increment);
+            acool.Fire();
+            await acool.Stop();
+            Assert.False(acool.IsCooldown);
+            Assert.AreEqual(1, Counter.Count);
+        }
+
+        [Test]
+        public async Task Stop_WithoutStarting_noError()
+        {
+            var acool = new AsyncCooldown(T.LongTime, Counter.Increment, DropCounter.Increment);
+            await acool.Stop();
+            Assert.False(acool.IsCooldown);
+        }
     }
 }
