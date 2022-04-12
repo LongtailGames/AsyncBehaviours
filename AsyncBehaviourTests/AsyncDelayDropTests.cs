@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AsyncBehaviourTests
 {
     [TestFixture]
-    public class AsyncQueuedDropTests:AsyncDelayTests
+    public class AsyncDelayDropTests:AsyncDelayTests
     {
         protected override IAsyncDelayed CreateInstance(TimeSpan cooldown, Action action)
         {
@@ -16,10 +16,10 @@ namespace AsyncBehaviourTests
         
         
         [Test]
-        public async Task Multiple_events_allFire()
+        public async Task Multiple_events_OneFires()
         {
                 List<Task> tasks = new List<Task>();
-            var delay =  CreateInstance(TimeSpan.FromMilliseconds(100), Fire);
+            var delay =  CreateInstance(T.ShortTime, Fire);
             for (int i = 0; i < 10; i++)
             {
                 tasks.Add(delay.Fire());
@@ -27,5 +27,6 @@ namespace AsyncBehaviourTests
             await Task.WhenAll(tasks);
             Assert.AreEqual(1, Counter.Count);
         }
+  
     }
 }

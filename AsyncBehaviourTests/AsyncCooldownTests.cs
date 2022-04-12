@@ -118,8 +118,13 @@ namespace AsyncBehaviourTests
         public async Task Stop_WithoutStarting_noError()
         {
             var acool = new AsyncCooldown(T.LongTime, Counter.Increment, DropCounter.Increment);
+            var before = Counter.Count;
             await acool.Stop();
+            var after = Counter.Count;
+            Assert.AreEqual(before,after);
             Assert.False(acool.IsCooldown);
         }
+        
+        
     }
 }

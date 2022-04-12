@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace AsyncBehaviourTests
 {
     [TestFixture]
-    public class AsyncQueuedDelayTests:AsyncDelayTests
+    public class AsyncDelayQueuedTests:AsyncDelayTests
     {
         protected override IAsyncDelayed CreateInstance(TimeSpan cooldown, Action action)
         {
@@ -40,5 +40,7 @@ namespace AsyncBehaviourTests
             Assert.AreEqual(100,Counter.Count);
             Assert.False(adelay.isWaiting);
         }
+        
+      
     }
 }

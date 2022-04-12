@@ -95,7 +95,10 @@ namespace AsyncBehaviourTests
         {
             var aloop = new AsyncLoop(loopTime, Counter.Increment);
             aloop.Start();
+            var before = Counter.Count;
             await aloop.Stop();
+            var after = Counter.Count;
+            Assert.AreEqual(before,after);
             Assert.False(aloop.Running);
         }
     }

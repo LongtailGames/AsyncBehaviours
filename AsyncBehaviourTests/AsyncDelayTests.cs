@@ -98,7 +98,21 @@ namespace AsyncBehaviourTests
             await adelay.Stop();
             Assert.False(adelay.isWaiting);
         }
+      [Test]
+        public async Task Halt_stop_immediately()
+        {
+            var delay =  CreateInstance(T.MediumTime, Fire);
+            for (int i = 0; i < 4; i++)
+            {
+                delay.Fire();
+            }
 
+            var immediate = Counter.Count;
+            await delay.Stop();
+            var afterStop = Counter.Count;
+            Assert.AreEqual(immediate,afterStop);
+            Assert.False(delay.isWaiting);
+        }
       
     }
 }

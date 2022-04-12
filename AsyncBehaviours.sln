@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncBehaviours", "AsyncBeh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AsyncBehaviourTests", "AsyncBehaviourTests\AsyncBehaviourTests.csproj", "{49C24ED9-7E32-4713-8BA3-4278FA5BB28D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Benchmark", "Benchmark\Benchmark.csproj", "{91C56B5B-A3F3-48C5-B13F-8EA2073D49C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{49C24ED9-7E32-4713-8BA3-4278FA5BB28D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{49C24ED9-7E32-4713-8BA3-4278FA5BB28D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{49C24ED9-7E32-4713-8BA3-4278FA5BB28D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{91C56B5B-A3F3-48C5-B13F-8EA2073D49C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{91C56B5B-A3F3-48C5-B13F-8EA2073D49C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{91C56B5B-A3F3-48C5-B13F-8EA2073D49C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{91C56B5B-A3F3-48C5-B13F-8EA2073D49C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -13,18 +13,22 @@ namespace com.longtailgames.asyncbehaviours
         private TimeSpan delay;
         private Action action;
         private Task lastRequest;
+        private readonly CancellationTokenSource stopSource;
+        private readonly CancellationToken stopToken;
 
         public AsyncDelayedQueue(TimeSpan delay, Action action)
         {
             this.delay = delay;
             this.action = action;
+                 stopSource = new CancellationTokenSource();
+            stopToken = stopSource.Token;
         }
 
-        public async Task Fire(CancellationToken cancellationToken=default)
+        public async Task Fire(CancellationToken cancellationToken = default)
         {
             isWaiting = true;
             await Task.Delay(delay);
-            lastRequest =  ActuallyFire(cancellationToken);
+            lastRequest = ActuallyFire(cancellationToken);
             await lastRequest;
         }
 
@@ -33,18 +37,20 @@ namespace com.longtailgames.asyncbehaviours
             await oneAtATime.WaitAsync();
             try
             {
+                cancellationToken.ThrowIfCancellationRequested();
+                stopToken.ThrowIfCancellationRequested();
                 action.Invoke();
             }
             finally
             {
                 oneAtATime.Release(1);
                 isWaiting = false;
-                cancellationToken.ThrowIfCancellationRequested();
             }
         }
 
         public async Task Stop()
         {
+            stopSource.Cancel();
             await (lastRequest ?? Task.CompletedTask);
         }
     }
