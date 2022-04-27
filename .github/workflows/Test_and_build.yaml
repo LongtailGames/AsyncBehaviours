@@ -29,7 +29,12 @@ jobs:
         
       - name: Run benchmark
         run: dotnet ./Benchmark/bin/Release/net6.0/Benchmark.dll -c Release
-  
+        
+      - name: Upload build
+        uses: actions/upload-artifact@v3
+        with:
+          path: ./BenchmarkDotNet.Artifacts/
+      
   runTests:
     runs-on: ubuntu-latest
     steps:
@@ -49,6 +54,7 @@ jobs:
 
 #      - name: RunTests
 #        run: dotnet test -c Release --no-restore
+  
   build:
     needs: runTests
     runs-on: ubuntu-latest
