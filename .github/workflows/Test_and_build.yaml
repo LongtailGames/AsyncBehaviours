@@ -11,7 +11,7 @@ env:
 jobs:
   runBenchmark:
     runs-on: ubuntu-latest
-    needs: build
+    needs: runTests
     steps:
       - name: Checkout deploy build
         uses: actions/checkout@v3
