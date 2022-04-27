@@ -81,16 +81,16 @@ namespace AsyncBehaviourTests
             await Task.Delay(loopTime);
             Assert.AreEqual(countAtStop, Counter.Count);
         }
-        
-             [Test]
+
+        [Test]
         public async Task Stop_WithoutStarting_noError()
         {
             var aloop = new AsyncLoop(loopTime, Counter.Increment);
             await aloop.Stop();
             Assert.False(aloop.Running);
         }
-        
-             [Test]
+
+        [Test]
         public async Task Stop_TerminatesLoop()
         {
             var aloop = new AsyncLoop(loopTime, Counter.Increment);
@@ -98,7 +98,7 @@ namespace AsyncBehaviourTests
             var before = Counter.Count;
             await aloop.Stop();
             var after = Counter.Count;
-            Assert.AreEqual(before,after);
+            Assert.AreEqual(before, after);
             Assert.False(aloop.Running);
         }
     }

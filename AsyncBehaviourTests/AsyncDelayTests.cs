@@ -39,12 +39,7 @@ namespace AsyncBehaviourTests
             Assert.AreEqual(1, Counter.Count);
         }
 
-        [Test]
-        public async Task ZeroDelay()
-        {
-            await Task.Delay(0);
-            Assert.Pass();
-        }
+
 
         [Test]
         public async Task AfterFire_Fired()

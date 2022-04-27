@@ -44,7 +44,7 @@ namespace com.longtailgames.asyncbehaviours
         public async Task Stop()
         {
             Running = false;
-            await (loop??Task.CompletedTask);
+            await (loop ?? Task.CompletedTask);
         }
 
         /// <summary>
