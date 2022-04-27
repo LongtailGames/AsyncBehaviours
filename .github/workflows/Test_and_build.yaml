@@ -40,8 +40,8 @@ jobs:
       - name: Build app
         run: dotnet build -c Release --no-restore
 
-#      - name: RunTests
-#        run: dotnet test -c Release --no-restore
+      - name: RunTests
+        run: dotnet test -c Release --no-restore
 
       - name: Upload build
         uses: actions/upload-artifact@v3
