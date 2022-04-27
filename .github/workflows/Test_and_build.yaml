@@ -26,7 +26,7 @@ jobs:
         
       - name: Run benchmark
         run: dotnet ./Benchmark/bin/Release/net6.0/Benchmark.dll -c Release
-  build:
+  runTests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout deploy build
@@ -45,6 +45,23 @@ jobs:
 
 #      - name: RunTests
 #        run: dotnet test -c Release --no-restore
+  build:
+    needs: runTests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout deploy build
+        uses: actions/checkout@v3
+
+      - name: Setup dotnet
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
+
+      - name: Restore nuget
+        run: dotnet restore
+
+      - name: Build app
+        run: dotnet build -c Release --no-restore
 
       - name: Upload build
         uses: actions/upload-artifact@v3
