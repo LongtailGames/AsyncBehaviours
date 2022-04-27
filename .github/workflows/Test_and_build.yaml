@@ -78,6 +78,6 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: AsyncBehaviours
-          path: ./AsyncBehaviours/bin/Release/netstandard2.1/AsyncBehaviours.dll
+          path: ./AsyncBehaviours/bin/Release/netstandard2.0/AsyncBehaviours.dll
       
           
