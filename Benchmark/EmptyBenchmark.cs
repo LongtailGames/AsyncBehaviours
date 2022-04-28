@@ -2,6 +2,8 @@ using AsyncBehaviourTests;
 using BenchmarkDotNet.Attributes;
 using com.longtailgames.asyncbehaviours;
 
+namespace Benchmark;
+
 [MemoryDiagnoser]
 public class EmptyBenchmark
 {
@@ -9,12 +11,14 @@ public class EmptyBenchmark
     private Counter c = new Counter();
 
     [Benchmark(Baseline = true)]
-    public void cooldownFire()
+    public void CooldownFire()
     {
         var acool = new AsyncCooldown(TimeSpan.Zero, c.Increment);
         for (int i = 0; i < max; i++)
         {
+#pragma warning disable CS4014
             acool.Fire();
+#pragma warning restore CS4014
         }
     }
 
@@ -24,9 +28,33 @@ public class EmptyBenchmark
         var acool = new AsyncDelayedQueue(TimeSpan.Zero, c.Increment);
         for (int i = 0; i < max; i++)
         {
+#pragma warning disable CS4014
             acool.Fire();
+#pragma warning restore CS4014
         }
     }
+
+    [Benchmark]
+    public void DelayDrop()
+    {
+        var acool = new AsyncDelayedDropped(TimeSpan.Zero, c.Increment);
+        for (int i = 0; i < max; i++)
+        {
+#pragma warning disable CS4014
+            acool.Fire();
+#pragma warning restore CS4014
+        }
+    }
+
+    [Benchmark]
+    public void DelayLoop()
+    {
+        var acool = new AsyncLoop(TimeSpan.Zero, c.Increment);
+#pragma warning disable CS4014
+        acool.Start();
+#pragma warning restore CS4014
+    }
+
     [Benchmark]
     public void FloatList()
     {
