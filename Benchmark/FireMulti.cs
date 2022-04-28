@@ -7,7 +7,7 @@ namespace Benchmark;
 [MemoryDiagnoser]
 public class FireMulti
 {
-    private int max = 10;
+    private int max = 10000;
     private Counter c = new Counter();
 
     [Benchmark(Baseline = true)]
