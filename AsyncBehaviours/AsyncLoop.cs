@@ -47,6 +47,7 @@ namespace com.longtailgames.asyncbehaviours
             await (loop ?? Task.CompletedTask);
         }
 
+
         /// <summary>
         /// Stops the looping behaviour.
         /// Equivalent to <seealso cref="Stop"/>

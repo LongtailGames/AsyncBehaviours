@@ -9,10 +9,11 @@ namespace com.longtailgames.asyncbehaviours
         /// </summary>
         public bool isWaiting { get; private set; }
 
+        public Task CurrentTask { get; private set; }
+
         public SemaphoreSlim oneAtATime = new SemaphoreSlim(1);
         private TimeSpan delay;
         private Action action;
-        private Task lastRequest;
         private readonly CancellationTokenSource stopSource;
         private readonly CancellationToken stopToken;
 
@@ -20,7 +21,7 @@ namespace com.longtailgames.asyncbehaviours
         {
             this.delay = delay;
             this.action = action;
-                 stopSource = new CancellationTokenSource();
+            stopSource = new CancellationTokenSource();
             stopToken = stopSource.Token;
         }
 
@@ -28,16 +29,16 @@ namespace com.longtailgames.asyncbehaviours
         {
             isWaiting = true;
             await Task.Delay(delay);
-            lastRequest = ActuallyFire(cancellationToken);
-            await lastRequest;
+            CurrentTask = ActuallyFire(cancellationToken);
+            await CurrentTask;
         }
 
-        private async Task ActuallyFire(CancellationToken cancellationToken)
+        private async Task ActuallyFire(CancellationToken externaleCancellationToken)
         {
-            await oneAtATime.WaitAsync();
             try
             {
-                cancellationToken.ThrowIfCancellationRequested();
+                await oneAtATime.WaitAsync(stopToken);
+                externaleCancellationToken.ThrowIfCancellationRequested();
                 stopToken.ThrowIfCancellationRequested();
                 action.Invoke();
             }
@@ -51,7 +52,12 @@ namespace com.longtailgames.asyncbehaviours
         public async Task Stop()
         {
             stopSource.Cancel();
-            await (lastRequest ?? Task.CompletedTask);
+            //special case of tasks not yet started but stopping.
+            if (CurrentTask == null)
+            {
+                isWaiting = false;
+            }
+            await (CurrentTask ?? Task.CompletedTask);
         }
     }
 }

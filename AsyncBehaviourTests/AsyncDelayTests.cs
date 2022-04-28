@@ -40,7 +40,6 @@ namespace AsyncBehaviourTests
         }
 
 
-
         [Test]
         public async Task AfterFire_Fired()
         {
@@ -93,10 +92,15 @@ namespace AsyncBehaviourTests
             await adelay.Stop();
             Assert.False(adelay.isWaiting);
         }
-      [Test]
-        public async Task Halt_stop_immediately()
+
+ 
+
+ 
+
+        [Test]
+        public async Task Stops_immediately_unstarted()
         {
-            var delay =  CreateInstance(T.MediumTime, Fire);
+            var delay = CreateInstance(T.MediumTime, Fire);
             for (int i = 0; i < 4; i++)
             {
                 delay.Fire();
@@ -105,9 +109,26 @@ namespace AsyncBehaviourTests
             var immediate = Counter.Count;
             await delay.Stop();
             var afterStop = Counter.Count;
-            Assert.AreEqual(immediate,afterStop);
+            Assert.AreEqual(immediate, afterStop);
             Assert.False(delay.isWaiting);
         }
-      
+
+        [Test]
+        public async Task Stops_immediately_started()
+        {
+            var delay = CreateInstance(T.MediumTime, Fire);
+            var firstFire = delay.Fire();
+            for (int i = 0; i < 4; i++)
+            {
+                delay.Fire();
+            }
+
+            await firstFire;
+            var immediate = Counter.Count;
+            await delay.Stop();
+            var afterStop = Counter.Count;
+            Assert.AreEqual(immediate, afterStop);
+            Assert.False(delay.isWaiting);
+        }
     }
 }

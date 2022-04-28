@@ -15,10 +15,10 @@
         }
 
         public bool isWaiting { get; private set; }
+        public Task CurrentTask { get; private set; }
 
         private TimeSpan delay;
         private Action action;
-        private Task currentWait;
         private bool stopped;
         private readonly CancellationTokenSource stopSource;
         private readonly CancellationToken stopToken;
@@ -33,8 +33,8 @@
             try
             {
                 isWaiting = true;
-                currentWait = Task.Delay(delay);
-                await currentWait;
+                CurrentTask = Task.Delay(delay);
+                await CurrentTask;
                 cancellationToken.ThrowIfCancellationRequested();
                 stopToken.ThrowIfCancellationRequested();
                 if (stopped)
@@ -52,7 +52,7 @@
         public async Task Stop()
         {
             stopSource.Cancel();
-            await (currentWait ?? Task.CompletedTask);
+            await (CurrentTask ?? Task.CompletedTask);
         }
     }
 }

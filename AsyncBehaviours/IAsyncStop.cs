@@ -8,4 +8,5 @@ public interface IAsyncStop
     /// </summary>
     /// <returns></returns>
     Task Stop();
+
 }
