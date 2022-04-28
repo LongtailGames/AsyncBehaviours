@@ -5,9 +5,9 @@ using com.longtailgames.asyncbehaviours;
 namespace Benchmark;
 
 [MemoryDiagnoser]
-public class EmptyBenchmark
+public class FireMulti
 {
-    private int max = 100000;
+    private int max = 10;
     private Counter c = new Counter();
 
     [Benchmark(Baseline = true)]
@@ -46,14 +46,18 @@ public class EmptyBenchmark
         }
     }
 
-    [Benchmark]
-    public void DelayLoop()
-    {
-        var acool = new AsyncLoop(TimeSpan.Zero, c.Increment);
-#pragma warning disable CS4014
-        acool.Start();
-#pragma warning restore CS4014
-    }
+//     [Benchmark] This causes benchmarks to stall.
+//     public void DelayLoop()
+//     {
+//         var acool = new AsyncLoop(TimeSpan.Zero, c.Increment);
+//         for (int i = 0; i < max; i++)
+//         {
+// #pragma warning disable CS4014
+//             acool.Start();
+//             acool.Stop(); //need to stop loop
+// #pragma warning restore CS4014
+//         }
+//     }
 
     [Benchmark]
     public void FloatList()
