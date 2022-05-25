@@ -3,3 +3,4 @@
 
 # AsyncBehaviours
 Asyncronous behaviours for use in unity3D.
+This is the pure C# library.
